@@ -36,24 +36,6 @@ Este proyecto es un **Backend REST API** desarrollado con Spring Boot 3.3.3 que 
 - Maven 3.6+
 - Git
 
-### Pasos de Instalación
-
-1. **Clonar el repositorio**
-```bash
-git clone <URL-del-repositorio>
-cd TPO-springboot-deploy
-```
-
-2. **Compilar el proyecto**
-```bash
-mvn clean install
-```
-
-3. **Ejecutar la aplicación**
-```bash
-mvn spring-boot:run
-```
-
 La aplicación estará disponible en: `http://localhost:8080`
 
 La consola H2 estará disponible en: `http://localhost:8080/h2-console`
