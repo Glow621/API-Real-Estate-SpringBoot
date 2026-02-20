@@ -29,90 +29,50 @@ Este proyecto es un **Backend REST API** desarrollado con Spring Boot 3.3.3 que 
 
 ---
 
-## ⚙️ Configuración e Instalación
+---
 
-### Requisitos Previos
-- JDK 17 o superior
-- Maven 3.6+
-- Git
+## 🔑 Roles de Usuario
 
-La aplicación estará disponible en: `http://localhost:8080`
+El proyecto soporta diferentes roles identificados por números:
 
-La consola H2 estará disponible en: `http://localhost:8080/h2-console`
-
-### Configuración de Base de Datos
-
-#### Opción 1: H2 Database (Desarrollo - Actual)
-
-El archivo [application.properties](application.properties) está configurado actualmente para usar **H2 Database** (en memoria). Esta es una base de datos temporal **perfecta para desarrollo**:
-
-```properties
-spring.datasource.url=jdbc:h2:mem:testdb
-spring.datasource.driverClassName=org.h2.Driver
-spring.datasource.username=sa
-spring.datasource.password=
-spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-spring.h2.console.enabled=true
-spring.jpa.hibernate.ddl-auto=update
-```
-
-**Características:**
-- • Base de datos en memoria (no requiere instalación)
-- • Perfecta para tests y desarrollo
-- • Los datos se pierden al reiniciar la aplicación
-- • Consola H2 disponible en: `http://localhost:8080/h2-console`
+| Rol | ID | Descripción |
+|-----|-----|-----------|
+| Admin | 0 | Administrador del sistema |
+| Propietario | 1 | Dueño de propiedades |
+| Inquilino | 2 | Arrendatario |
+| Habitante | 3 | Residente que no es propietario |
 
 ---
 
-#### Opción 2: SQL Server (Producción - Listo para usar)
+## 🚀 Características Principales
 
-El proyecto **está completamente listo** para funcionar con **SQL Server**. Para cambiar a una base de datos SQL Server persistente:
+• **CRUD Completo** para Edificios, Unidades, Personas, Reclamos e Imágenes
 
-**1. Instalar SQL Server** (si no lo tienes)
-- Descargar desde: https://www.microsoft.com/es-es/sql-server/sql-server-downloads
+• **Sistema de Login** con validación de credenciales
 
-**2. Actualizar `application.properties`:**
+• **Relaciones Complejas**:
+  - Unidades pertenecen a Edificios (1-M)
+  - Personas pueden ser propietarias de múltiples Unidades (M-M)
+  - Personas pueden habitar múltiples Unidades (M-M)
+  - Reclamos están asociados a Unidades y Personas
 
-```properties
-# SQL Server Configuration
-spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=TPO_DB;encrypt=true;trustServerCertificate=true
-spring.datasource.username=sa
-spring.datasource.password=TuContraseña123
-spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
-spring.jpa.database-platform=org.hibernate.dialect.SQLServerDialect
-spring.jpa.hibernate.ddl-auto=update
-```
+• **Gestión de Ciclo de Vida**:
+  - Alquilar unidades
+  - Transferir propiedad
+  - Liberar unidades (desalojo)
+  - Reasignar unidades a edificios
 
-**3. Crear la base de datos (Opcional - Hibernate la crea automáticamente):**
+• **Sistema de Reclamos** con seguimiento de estado
 
-```sql
-CREATE DATABASE TPO_DB;
-```
+• **Base de Datos en Memoria (H2)** para desarrollo
 
-**Parámetros importantes:**
-- `localhost:1433` - Host y puerto de SQL Server (ajusta según tu configuración)
-- `TPO_DB` - Nombre de la base de datos
-- `sa` - Usuario por defecto de SQL Server
-- `TuContraseña123` - Cambiar por tu contraseña real
-- `encrypt=true;trustServerCertificate=true` - Configuración segura
-
-**Características:**
-- • Datos persistentes (no se pierden al reiniciar)
-- • Mejor rendimiento en producción
-- • Soporte para múltiples usuarios simultáneos
-- • Driver MSSQL JDBC ya incluido en `pom.xml`
-- • **Aplicación lista sin cambios de código** - solo cambiar propiedades
+• **Serialización JSON** con Jackson
 
 ---
 
-#### Opción 3: Otras Bases de Datos
+## 📚 Base de Datos
 
-El proyecto también puede funcionar con:
-- **PostgreSQL**: Cambiar `spring.datasource.url=jdbc:postgresql://localhost:5432/tpo_db`
-- **MySQL**: Cambiar `spring.datasource.url=jdbc:mysql://localhost:3306/tpo_db`
-- **Oracle**: Cambiar `spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE`
-
-Solo necesitas actualizar el driver en `pom.xml` si usas otra BD.
+El proyecto incluye un archivo [tablas.sql](tablas.sql) con el esquema de referencia. La aplicación usa **Hibernate** para crear y actualizar automáticamente las tablas basadas en las entidades JPA.
 
 ---
 
@@ -592,91 +552,5 @@ curl -X PUT "http://localhost:8080/api/reclamos/1/estado" \
 curl "http://localhost:8080/api/unidades/persona/37654321"
 ```
 
----
-
-## 🔑 Roles de Usuario
-
-El proyecto soporta diferentes roles identificados por números:
-
-| Rol | ID | Descripción |
-|-----|-----|-----------|
-| Admin | 0 | Administrador del sistema |
-| Propietario | 1 | Dueño de propiedades |
-| Inquilino | 2 | Arrendatario |
-| Habitante | 3 | Residente que no es propietario |
-
----
-
-## 🚀 Características Principales
-
-• **CRUD Completo** para Edificios, Unidades, Personas, Reclamos e Imágenes
-
-• **Sistema de Login** con validación de credenciales
-
-• **Relaciones Complejas**:
-  - Unidades pertenecen a Edificios (1-M)
-  - Personas pueden ser propietarias de múltiples Unidades (M-M)
-  - Personas pueden habitar múltiples Unidades (M-M)
-  - Reclamos están asociados a Unidades y Personas
-
-• **Gestión de Ciclo de Vida**:
-  - Alquilar unidades
-  - Transferir propiedad
-  - Liberar unidades (desalojo)
-  - Reasignar unidades a edificios
-
-• **Sistema de Reclamos** con seguimiento de estado
-
-• **Base de Datos en Memoria (H2)** para desarrollo
-
-• **Serialización JSON** con Jackson
-
----
-
-## 📚 Base de Datos
-
-El proyecto incluye un archivo [tablas.sql](tablas.sql) con el esquema de referencia. La aplicación usa **Hibernate** para crear y actualizar automáticamente las tablas basadas en las entidades JPA.
-
----
-
-## 🛠️ Desarrollo
-
-### Ejecutar Tests
-```bash
-mvn test
-```
-
-### Compilar sin Ejecutar
-```bash
-mvn compile
-```
-
-### Generar Archivo JAR
-```bash
-mvn package
-```
-
----
-
-## 📝 Notas Importantes
-
-- Las contraseñas se almacenan en texto plano (considera encriptarlas en producción)
-- La base de datos H2 es en memoria, los datos se pierden al reiniciar
-- Para producción, configurar una base de datos persistente (SQL Server, PostgreSQL, etc.)
-- El proyecto usa validación de relaciones cascada para mantener integridad referencial
-
----
-
-## 👨‍💻 Autor
-
-Proyecto desarrollado como Trabajo Práctico para UADE - 2025
-
----
-
-## 📞 Soporte
-
-Para reportes de problemas o sugerencias, revisa los endpoints disponibles y la estructura de datos de los DTOs.
-
----
-
 **Última actualización**: Febrero 2026
+
