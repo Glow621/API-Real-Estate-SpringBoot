@@ -1,4 +1,4 @@
-# TPO - Sistema de Gestión de Edificios y Unidades
+# Sistema de Gestión de Edificios y Unidades
 
 Una aplicación Spring Boot para la gestión integral de edificios, unidades habitacionales, personas, reclamos e imágenes. Sistema diseñado para administrar propiedades, inquilinos, propietarios y el ciclo de vida de las unidades.
 
