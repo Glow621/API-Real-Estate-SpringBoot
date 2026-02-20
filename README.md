@@ -64,7 +64,7 @@ El proyecto soporta diferentes roles identificados por números:
 
 • **Sistema de Reclamos** con seguimiento de estado
 
-• **Base de Datos en Memoria (H2)** para desarrollo
+• **Base de Datos** H2 en memoria para desarrollo y SQL para producción.
 
 • **Serialización JSON** con Jackson
 
@@ -177,7 +177,7 @@ Para almacenar referencias a imágenes de las unidades.
 
 ### 🔐 Autenticación
 
-#### POST `/api/login`
+#### POST • `/api/login`
 Autentica un usuario con documento y contraseña.
 
 **Parámetros (Query):**
@@ -202,7 +202,7 @@ Credenciales inválidas
 
 ### 🏢 Edificios
 
-#### POST `/api/edificios`
+#### POST • `/api/edificios`
 Crea un nuevo edificio.
 
 **Body (JSON):**
@@ -223,7 +223,7 @@ Crea un nuevo edificio.
 }
 ```
 
-#### GET `/api/edificios`
+#### GET • `/api/edificios`
 Obtiene todos los edificios.
 
 **Respuesta (200 OK):**
@@ -238,14 +238,14 @@ Obtiene todos los edificios.
 ]
 ```
 
-#### GET `/api/edificios/{codigo}`
+#### GET • `/api/edificios/{codigo}`
 Obtiene un edificio específico por su código.
 
 **Respuesta (200 OK):** Objeto Edificio
 
 **Respuesta (404 Not Found):** Si el edificio no existe
 
-#### DELETE `/api/edificios/{codigo}`
+#### DELETE • `/api/edificios/{codigo}`
 Elimina un edificio.
 
 **Respuesta (204 No Content):** Si se eliminó correctamente
@@ -254,7 +254,7 @@ Elimina un edificio.
 
 ### 🏠 Unidades
 
-#### POST `/api/unidades`
+#### POST • `/api/unidades`
 Crea una nueva unidad en un edificio.
 
 **Body (JSON):**
@@ -271,19 +271,19 @@ Crea una nueva unidad en un edificio.
 
 **Respuesta (404 Not Found):** Si el edificio no existe
 
-#### GET `/api/unidades`
+#### GET • `/api/unidades`
 Obtiene todas las unidades.
 
 **Respuesta (200 OK):** Lista de unidades
 
-#### GET `/api/unidades/{id}`
+#### GET • `/api/unidades/{id}`
 Obtiene una unidad específica por ID.
 
 **Respuesta (200 OK):** Objeto Unidad
 
 **Respuesta (404 Not Found):** Si la unidad no existe
 
-#### GET `/api/unidades/persona/{id}`
+#### GET • `/api/unidades/persona/{id}`
 Obtiene todas las unidades de una persona (propietario/habitante/inquilino).
 
 **Parámetros:**
@@ -291,14 +291,14 @@ Obtiene todas las unidades de una persona (propietario/habitante/inquilino).
 
 **Respuesta (200 OK):** Lista de unidades asociadas a la persona
 
-#### PUT `/api/unidades/{unidadId}/agregar/{edificioId}`
+#### PUT • `/api/unidades/{unidadId}/agregar/{edificioId}`
 Reasigna una unidad a un edificio diferente (admin).
 
 **Respuesta (200 OK):** Unidad actualizada
 
 **Respuesta (404 Not Found):** Si unidad o edificio no existe
 
-#### PUT `/api/unidades/{id}/alquilar/{documento}`
+#### PUT • `/api/unidades/{id}/alquilar/{documento}`
 Un inquilino alquila (ocupa) una unidad.
 
 **Parámetros:**
@@ -311,7 +311,7 @@ Un inquilino alquila (ocupa) una unidad.
 
 **Respuesta (404 Not Found):** Si la unidad o persona no existe
 
-#### PUT `/api/unidades/{id}/transferir/{nuevoPropietarioDNI}`
+#### PUT • `/api/unidades/{id}/transferir/{nuevoPropietarioDNI}`
 Transfiere la propiedad de una unidad a otra persona.
 
 **Parámetros:**
@@ -322,14 +322,14 @@ Transfiere la propiedad de una unidad a otra persona.
 
 **Respuesta (404 Not Found):** Si unidad o persona no existe
 
-#### PUT `/api/unidades/{id}/liberar`
+#### PUT • `/api/unidades/{id}/liberar`
 Libera una unidad (desaloja inquilino y marca como deshabitada).
 
 **Respuesta (200 OK):** Unidad liberada
 
 **Respuesta (404 Not Found):** Si la unidad no existe
 
-#### DELETE `/api/unidades/{id}`
+#### DELETE • `/api/unidades/{id}`
 Elimina una unidad.
 
 **Respuesta (204 No Content):** Si se eliminó
@@ -338,7 +338,7 @@ Elimina una unidad.
 
 ### 👤 Personas
 
-#### POST `/api/personas`
+#### POST • `/api/personas`
 Crea una nueva persona (usuario).
 
 **Body (JSON):**
@@ -355,19 +355,19 @@ Crea una nueva persona (usuario).
 
 **Respuesta (201 Created):** Objeto Persona creado
 
-#### GET `/api/personas`
+#### GET • `/api/personas`
 Obtiene todas las personas.
 
 **Respuesta (200 OK):** Lista de personas
 
-#### GET `/api/personas/{documento}`
+#### GET • `/api/personas/{documento}`
 Obtiene una persona específica por documento.
 
 **Respuesta (200 OK):** Objeto Persona
 
 **Respuesta (404 Not Found):** Si la persona no existe
 
-#### DELETE `/api/personas/{documento}`
+#### DELETE • `/api/personas/{documento}`
 Elimina una persona.
 
 **Respuesta (204 No Content):** Si se eliminó
@@ -376,7 +376,7 @@ Elimina una persona.
 
 ### 🆘 Reclamos
 
-#### POST `/api/reclamos`
+#### POST • `/api/reclamos`
 Crea un nuevo reclamo de una persona para una unidad.
 
 **Body (JSON):**
@@ -395,26 +395,26 @@ Crea un nuevo reclamo de una persona para una unidad.
 
 **Respuesta (404 Not Found):** Si la persona o unidad no existe
 
-#### GET `/api/reclamos`
+#### GET • `/api/reclamos`
 Obtiene todos los reclamos.
 
 **Respuesta (200 OK):** Lista de reclamos
 
-#### GET `/api/reclamos/{nroReclamo}`
+#### GET • `/api/reclamos/{nroReclamo}`
 Obtiene un reclamo específico por número.
 
 **Respuesta (200 OK):** Objeto Reclamo
 
 **Respuesta (404 Not Found):** Si el reclamo no existe
 
-#### GET `/api/reclamos/unidad/{unidadId}`
+#### GET • `/api/reclamos/unidad/{unidadId}`
 Obtiene todos los reclamos de una unidad específica.
 
 **Respuesta (200 OK):** Lista de reclamos de la unidad
 
 **Respuesta (204 No Content):** Si no hay reclamos
 
-#### GET `/api/reclamos/persona/{id}`
+#### GET • `/api/reclamos/persona/{id}`
 Obtiene todos los reclamos reportados por una persona.
 
 **Parámetros:**
@@ -424,7 +424,7 @@ Obtiene todos los reclamos reportados por una persona.
 
 **Respuesta (404 Not Found):** Si no hay reclamos
 
-#### PUT `/api/reclamos/{nroReclamo}/estado`
+#### PUT • `/api/reclamos/{nroReclamo}/estado`
 Actualiza el estado de un reclamo.
 
 **Body (JSON):**
@@ -438,7 +438,7 @@ Actualiza el estado de un reclamo.
 
 **Respuesta (404 Not Found):** Si el reclamo no existe
 
-#### DELETE `/api/reclamos/{nroReclamo}`
+#### DELETE • `/api/reclamos/{nroReclamo}`
 Elimina un reclamo.
 
 **Respuesta (204 No Content):** Si se eliminó
@@ -447,7 +447,7 @@ Elimina un reclamo.
 
 ### 🖼️ Imágenes
 
-#### POST `/api/imagenes`
+#### POST • `/api/imagenes`
 Crea una nueva imagen.
 
 **Body (JSON):**
@@ -459,19 +459,19 @@ Crea una nueva imagen.
 
 **Respuesta (201 Created):** Objeto Imagen creado
 
-#### GET `/api/imagenes`
+#### GET • `/api/imagenes`
 Obtiene todas las imágenes.
 
 **Respuesta (200 OK):** Lista de imágenes
 
-#### GET `/api/imagenes/{numero}`
+#### GET • `/api/imagenes/{numero}`
 Obtiene una imagen específica por número.
 
 **Respuesta (200 OK):** Objeto Imagen
 
 **Respuesta (404 Not Found):** Si la imagen no existe
 
-#### DELETE `/api/imagenes/{numero}`
+#### DELETE • `/api/imagenes/{numero}`
 Elimina una imagen.
 
 **Respuesta (204 No Content):** Si se eliminó
